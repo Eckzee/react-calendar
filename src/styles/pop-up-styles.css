@@ -1,0 +1,70 @@
+.pop-up ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 80%;
+  margin: 0 auto;
+  max-height: 70%;
+  overflow-y: auto;
+  height: 100%;
+}
+
+ul .event:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.event {
+  display: block;
+  width: 100%;
+  padding-bottom: 1.5rem;
+}
+
+.event .top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.event .top-bar:before,
+.event .top-bar:after {
+  content: "";
+  position: absolute;
+  height: calc(100% - 4px);
+  width: calc(100% - 4px);
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease 0s;
+  border: 2px solid transparent;
+  transform: scale(0, 0);
+}
+
+.event .top-bar:before {
+  border-left-color: #77a6b6;
+  border-top-color: #77a6b6;
+  transform-origin: 0 0;
+}
+
+.event .top-bar:after {
+  border-right-color: #77a6b6;
+  border-bottom-color: #77a6b6;
+  transform-origin: 100% 100%;
+  bottom: 0;
+  right: 0;
+}
+
+.event .top-bar:hover:before,
+.event .top-bar:hover:after {
+  transform: scale(1, 1);
+}
+
+.event .details {
+  display: block;
+  text-align: left;
+  padding: 1rem 1rem 0 1rem;
+}

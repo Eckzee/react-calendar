@@ -1,0 +1,431 @@
+* {
+  box-sizing: border-box;
+}
+.App {
+  text-align: center;
+}
+
+button {
+  cursor: pointer;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.container {
+  max-width: 100%;
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  padding: 2rem 4rem;
+}
+
+.calendar {
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: [sun-start] 14.29% [mon-start] 14.29% [tues-start] 14.29% [weds-start] 14.29% [thurs-start] 14.29% [fri-start] 14.29% [sat-start] 14.29%;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 3rem;
+  max-width: 90%;
+  grid-auto-rows: 2fr 5.5fr 5.5fr 5.5fr 5.5fr 5.5fr 5.5fr;
+}
+
+.calendar .heading {
+  padding: 0.5rem;
+  background-color: #77a6b6;
+  color: white;
+}
+
+.calendar > div {
+  border: 1px solid #000;
+  border-collapse: collapse;
+  transition: border-color 0.2s ease, border-width 0.2s ease;
+  position: relative;
+}
+
+.calendar > div::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  border: 2px solid #b68777;
+  top: -2px;
+  left: -2px;
+  transition: opacity 0.1s ease;
+  z-index: 1;
+}
+
+.calendar > div:hover:before {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.calendar > div.selected {
+  border-color: #77a6b6;
+  border-width: 4px;
+}
+
+.calendar > div.off-month {
+  opacity: 0.6;
+  background-color: #f2f2f2;
+}
+
+.calendar > div > span {
+  float: left;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.calendar > div > span::after {
+  content: "";
+  width: 100%;
+  display: block;
+  clear: both;
+}
+
+.calendar > div > ul {
+  width: 100%;
+  font-size: 0.8rem;
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.calendar > div > ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0em 1.5rem 0rem 1rem;
+  width: 100%;
+}
+
+.calendar .days {
+}
+
+.calendar .days.inactive {
+  opacity: 0.7;
+  background-color: #8f8e8e;
+}
+
+.calendar .days span {
+  position: relative;
+  top: 0.5em;
+  left: 1em;
+  float: left;
+}
+
+.arr-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
+  position: absolute;
+  top: 50%;
+}
+
+.arr-btn.prev {
+  left: 0.5rem;
+  transform: translate(50%, 0%);
+}
+
+.arr-btn.next {
+  right: 0.5rem;
+  transform: translate(-50%, 0%);
+}
+
+.pop-up {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  justify-content: center;
+  max-width: 90rem;
+  max-height: 50rem;
+  opacity: 1;
+  z-index: 1;
+  border: 2px solid black;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  display: flex;
+}
+
+span.close {
+  position: absolute;
+  height: 1.5rem;
+  width: 1.5rem;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+
+span.close:before,
+span.close:after {
+  content: "";
+  position: absolute;
+  width: 0.2rem;
+  height: 100%;
+  background-color: #000;
+  top: 0;
+  left: 50%;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+span.close:before {
+  transform: translateX(-50%) rotate(45deg);
+}
+
+span.close:after {
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+span.close:hover:before {
+  transform: translate(-50%) rotate(-45deg);
+  background-color: #b68777;
+}
+
+span.close:hover:after {
+  transform: translate(-50%) rotate(45deg);
+  background-color: #b68777;
+}
+
+.pop-up h2 {
+  width: 100%;
+}
+
+.btn {
+  background-image: linear-gradient(to right, #77a6b6 50%, #fff 50%);
+  background-size: 200%;
+  background-position: 100%;
+  overflow: hidden;
+  border: 1px solid #77a6b6;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  color: #77a6b6;
+  transition: background-position 0.2s ease 0s, color 0.1s ease 0.1s;
+}
+
+.btn:hover {
+  background-position: 0%;
+  color: #fff;
+  transition: background-position 0.4s ease 0s, color 0.2s ease 0.1s;
+}
+
+.add-event-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: #f2f2f2;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em;
+  max-width: 50rem;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  z-index: 9;
+}
+
+.add-event-form h2 {
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.add-event-form > div {
+  max-width: calc(50% - 1rem);
+  text-align: left;
+  margin: 0 0.5rem 1rem;
+  width: 100%;
+}
+
+.add-event-form > div.location,
+.add-event-form > div.text-area {
+  max-width: 100%;
+}
+
+.add-event-form > div label {
+  display: block;
+}
+
+.add-event-form > div input,
+.add-event-form > div textarea {
+  width: 100%;
+  padding: 0.3rem;
+  border: 2px solid #000;
+}
+
+.add-event-form > div textarea {
+  min-height: 10rem;
+}
+
+.add-event-form .date-input {
+  position: relative;
+}
+
+.date-input .little-calendar {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  top: 100%;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border: 0.2rem solid #77a6b6;
+  justify-content: center;
+  padding-top: 1rem;
+  align-items: center;
+}
+
+.date-input .little-calendar ul {
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.little-calendar .day {
+  width: 14.25%;
+  text-align: center;
+}
+
+.little-calendar [class^="arrow"] {
+  position: relative;
+  height: 1.2rem;
+  width: 1.2rem;
+}
+
+.little-calendar [class^="arrow"]:before {
+  content: "";
+  border-top: 3px solid #77a6b6;
+  border-right: 3px solid #77a6b6;
+  height: 0.7rem;
+  width: 0.7rem;
+  top: 50%;
+  left: 50%;
+  display: block;
+  cursor: pointer;
+}
+
+.little-calendar .arrow-next:before {
+  transform: translate(-50%, -30%) rotate(45deg);
+  transform-origin: bottom left;
+}
+
+.little-calendar .arrow-prev:before {
+  transform: translate(-50%, 10%) rotate(-135deg);
+  transform-origin: center;
+}
+
+.little-calendar select {
+  appearance: none;
+  border: none;
+  padding: 0.25rem;
+  min-width: 8rem;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+label.day.radio {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  display: block;
+  padding: 0.2rem;
+  cursor: pointer;
+}
+
+label.day.radio:before,
+label.day.radio:after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 1.4rem;
+  width: 1.4rem;
+  transform: translate(-50%, -50%);
+}
+
+label.day.radio:before {
+  top: 52%;
+  left: 51%;
+  border-radius: 50%;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+  position: absolute;
+  z-index: -1;
+}
+
+label.day.radio.selected:before {
+  background-color: #77a6b6;
+  transition: 0.4s ease 0s;
+}
+
+label.day.radio.selected {
+  color: #fff;
+}
+
+label.day.radio:after {
+  top: 50%;
+  left: 50%;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease 0s;
+  border-radius: 0.25rem;
+}
+
+label.day.radio:hover:after {
+  border-color: #77a6b6;
+  transition: border-color 0.4s ease 0s;
+}
+
+label.day.radio input[type="radio"] {
+  visibility: hidden;
+  height: 0rem;
+  width: 0rem;
+  margin: 0;
+  padding: 0;
+}
+
+div.date-display > input {
+  position: relative;
+  z-index: -1;
+}
